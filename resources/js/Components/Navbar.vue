@@ -20,7 +20,6 @@
                         <i class="gg-more-vertical-alt"></i>
                     </button>
                 </div>
-                <!-- End Logo Header -->
             </div>
             <!-- Navbar Header -->
             <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
@@ -310,7 +309,7 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Logout</a>
+                                        <a class="dropdown-item" href="#" @click.prevent="logout">Logout</a>
                                     </li>
                                 </div>
                             </ul>
@@ -323,4 +322,20 @@
     </div>
 </template>
 <script setup>
+import { useForm } from '@inertiajs/vue3';
+import { useToast } from "vue-toastification";
+
+const form = useForm();
+const toast = useToast();
+
+const logout = () => {
+    form.post(route('logout'), {
+        onSuccess: () => {
+            toast.success("Berhasil Logout");
+        },
+        onError: () => {
+            toast.error("Gagal Logout");
+        }
+    });
+};
 </script>

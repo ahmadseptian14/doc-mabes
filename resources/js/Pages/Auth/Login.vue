@@ -1,6 +1,5 @@
 <template>
     <GuestLayout>
-
         <Head title="Login" />
         <div class="container-fluid">
             <div class="row no-gutter">
@@ -21,12 +20,17 @@
                                         </div>
                                         <div class="form-group mb-3">
                                             <input id="inputPassword" type="password" placeholder="Password" required
-                                                class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+                                                class="form-control rounded-pill border-0 shadow-sm px-4"
                                                 v-model="form.password">
+                                        </div>
+                                        <div v-if="form.errors.email || form.errors.password" class="text-danger text-center mb-3">
+                                            <p v-if="form.errors.email">{{ form.errors.email }}</p>
+                                            <p v-if="form.errors.password">{{ form.errors.password }}</p>
                                         </div>
                                         <div class="form-group text-center">
                                             <button type="submit"
-                                                class="btn btn-primary text-uppercase rounded-pill shadow-sm px-4">
+                                                class="btn btn-primary text-uppercase rounded-pill shadow-sm px-4"
+                                                :disabled="form.processing">
                                                 Login
                                             </button>
                                         </div>
@@ -42,18 +46,31 @@
 </template>
 
 <script setup>
-import { Head } from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import { useForm } from '@inertiajs/vue3'
+import { route } from 'ziggy-js'; // Perbaikan impor
+import { useToast } from "vue-toastification";
+
 
 const form = useForm({
     email: '',
     password: ''
 })
+const toast = useToast();
 
-const submit = () => {
-    form.post(route('login'))
-}
+const submit = async () => {
+    await form.post(route('login'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.success("Berhasil Login");
+        },
+        onError: () => {
+            toast.error("Gagal Login");
+            form.reset('password');
+
+        },
+    });
+};
 </script>
 
 <style scoped>

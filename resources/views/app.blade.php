@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="/admin/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="/admin/assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="/admin/assets/css/demo.css" />
+    @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
 </head>
