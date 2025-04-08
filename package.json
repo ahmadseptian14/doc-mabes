@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "@inertiajs/vue3": "^2.0.5",
+        "dayjs": "^1.11.13",
         "vue-toastification": "^2.0.0-rc.5",
         "ziggy": "^2.4.0",
         "ziggy-js": "^2.5.2"

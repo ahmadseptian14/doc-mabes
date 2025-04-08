@@ -1,9 +1,7 @@
 <template>
     <div>
         <div class="wrapper">
-            <!-- Sidebar -->
             <Sidebar />
-            <!-- End Sidebar -->
             <div class="main-panel">
                 <Navbar />
                 <div class="container">

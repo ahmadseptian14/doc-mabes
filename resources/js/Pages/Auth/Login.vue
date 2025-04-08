@@ -48,7 +48,7 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
-import { route } from 'ziggy-js'; // Perbaikan impor
+import { route } from 'ziggy-js';
 import { useToast } from "vue-toastification";
 
 
@@ -67,7 +67,6 @@ const submit = async () => {
         onError: () => {
             toast.error("Gagal Login");
             form.reset('password');
-
         },
     });
 };
