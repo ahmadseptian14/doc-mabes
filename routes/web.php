@@ -16,8 +16,12 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('document')->group(function () {
         Route::get('/', [DocumentController::class, 'index'])->name('document.index');
-        Route::get('/{id}', [DocumentController::class, 'show'])->name('document.show');
-    });
+        // Route::get('/{id}', [DocumentController::class, 'show'])->name('document.show');
+        // Route::get('/{folder:slug}', [DocumentController::class, 'show'])->name('document.show');
+        Route::get('/{path?}', [DocumentController::class, 'show'])
+            ->where('path', '.*')
+            ->name('document.show');
+        });
 
     Route::prefix('folder')->group(function () {
         Route::post('/store', [FolderController::class, 'store'])->name('folder.store');

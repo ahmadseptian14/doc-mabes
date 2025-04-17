@@ -9,7 +9,8 @@ class Folder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'parent_id', 'user_id'];
+    protected $fillable = ['name', 'parent_id', 'user_id', 'slug'];
+    protected $appends = ['full_path'];
 
     public function user()
     {
@@ -25,4 +26,19 @@ class Folder extends Model
     {
         return $this->belongsTo(Folder::class, 'parent_id');
     }
+
+    public function getFullPathAttribute()
+    {
+        $segments = [];
+        $folder = $this;
+
+        while ($folder) {
+            array_unshift($segments, $folder->slug);
+            $folder = $folder->parent;
+        }
+
+        return implode('/', $segments);
+    }
+
+
 }

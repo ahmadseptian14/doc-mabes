@@ -33,20 +33,10 @@
                         <h4 class="text-section">Document</h4>
                     </li>
                     <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#base">
+                        <Link :href="route('document.index')">
                             <i class="fas fa-layer-group"></i>
-                            <p>File Manager</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="base">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <Link :href="route('document.index')">
-                                        <span class="sub-item">My Document</span>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
+                            My Document
+                        </Link>
                     </li>
                 </ul>
             </div>

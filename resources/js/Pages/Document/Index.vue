@@ -16,24 +16,32 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4" v-for="folder in folders" :key="folder.id">
-                    <Link :href="route('document.show', folder.id)">
-                    <div class="card card-secondary">
-                        <div class="card-body skew-shadow d-flex gap-3">
-                            <i class="fas fa-folder fa-3x"></i>
-                            <h5 class="mt-2">{{ folder.name }}</h5>
+                <template v-if="folders.length > 0">
+                    <div class="col-md-4" v-for="folder in folders" :key="folder.id">
+                        <Link :href="`/document/${folder.full_path}`">
+                        <div class="card card-secondary">
+                            <div class="card-body skew-shadow d-flex gap-3">
+                                <i class="fas fa-folder fa-3x"></i>
+                                <h5 class="mt-2">{{ folder.name }}</h5>
+                            </div>
                         </div>
+                        </Link>
                     </div>
-                    </Link>
-                </div>
+                </template>
+                <template v-else>
+                    <div class="col-12 text-center text-muted py-4">
+                        Belum ada folder yang tersedia.
+                    </div>
+                </template>
             </div>
+
         </AppLayout>
     </div>
     <div class="modal fade" id="createFolderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Buat Folder</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -61,13 +69,13 @@ import { ref } from 'vue'
 import { Head, Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { useToast } from "vue-toastification"
-import { route } from 'ziggy-js';
+import { route } from 'ziggy-js'
 
 const props = defineProps({
-  folders: {
-    type: Array,
-    default: () => []
-  }
+    folders: {
+        type: Array,
+        default: () => []
+    }
 })
 
 const folderName = ref('')
@@ -80,7 +88,8 @@ const createFolder = () => {
     }
 
     router.post(route('folder.store'), {
-        name: folderName.value
+        name: folderName.value,
+        parent_id: null
     }, {
         preserveScroll: true,
         onSuccess: () => {
@@ -89,8 +98,12 @@ const createFolder = () => {
             const modal = bootstrap.Modal.getInstance(document.getElementById('createFolderModal'))
             modal.hide()
         },
-        onError: () => {
-            toast.error("Gagal membuat folder baru")
+        onError: (errors) => {
+            if (errors.name) {
+                toast.error(errors.name)
+            } else {
+                toast.error("Gagal membuat folder baru")
+            }
         }
     })
 }
