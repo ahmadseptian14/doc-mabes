@@ -9,5 +9,15 @@ class File extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'user_id', 'folder_id', 'path'];
+    protected $fillable = ['name', 'user_id', 'folder_id', 'path', 'type'];
+
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

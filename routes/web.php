@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DashboardController;
@@ -25,5 +26,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('folder')->group(function () {
         Route::post('/store', [FolderController::class, 'store'])->name('folder.store');
+    });
+    Route::prefix('file')->group(function () {
+        Route::post('/store', [FileController::class, 'store'])->name('file.store');
     });
 });

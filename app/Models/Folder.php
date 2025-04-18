@@ -12,6 +12,11 @@ class Folder extends Model
     protected $fillable = ['name', 'parent_id', 'user_id', 'slug'];
     protected $appends = ['full_path'];
 
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
